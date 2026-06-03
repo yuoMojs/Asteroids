@@ -8,6 +8,7 @@ class Player(CircleShape):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
         self.timer = 0.0
+        self.invincible = 0.0
 
     def triangle(self) -> list[pygame.Vector2]:
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -43,6 +44,9 @@ class Player(CircleShape):
         if self.timer > 0:
             self.timer -= dt
 
+        if self.invincible > 0:
+            self.invincible -= dt
+
         keys = pygame.key.get_pressed()
 
         # Rotation
@@ -60,3 +64,5 @@ class Player(CircleShape):
         # Weapon Fire
         if keys[pygame.K_SPACE]:
             self.shoot()
+
+        self.wrap()
